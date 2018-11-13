@@ -10,7 +10,7 @@ Sometimes you have a small web application that you want to keep private, but do
 
 > "Small moves, Ellie. Small moves."
 
-**1.** Put the `auth.php` script somewhere in your web server. eg: 
+**1.** Put the `auth.php` script somewhere in your web server. eg:
 
 `/var/www/htdocs/auth.php`
 
@@ -52,3 +52,9 @@ require_once('/var/www/htdocs/auth.php');
 Now when you access your script using a browser (`index.php` in this example), you are presented with a small username/password form asking for your credentials.
 
 Easy!
+
+## To logout
+
+Just pass the `logout=1` url parameter to your script. eg:
+
+`http://127.0.0.1/index.php?logout=1`
