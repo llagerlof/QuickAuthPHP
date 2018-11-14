@@ -39,7 +39,7 @@ passwordfile = /var/auth.pass
 
 ## Almost done!
 
-Suppose you have a script called `index.php`. Add the `auth.php` in your script just below any `session_start()` (if you have any). If you script doesn't have a `session_start()` you only need to include the `auth.php` in the first line of your script. eg:
+Suppose you have a script called `index.php`. Add the `auth.php` in your script just below your `session_start()` (if you have any). If your script doesn't have a `session_start()` you just need to include the `auth.php` in the first line of your script. eg:
 
 **index.php**
 ```php
