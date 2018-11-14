@@ -1,6 +1,6 @@
 <?php
 /**
- * Quick Auth PHP 1.1
+ * Quick Auth PHP 1.1.1
  *
  * Quick Auth PHP is a script to quickly add web authentication for multiple users. No database required.
  *
@@ -22,10 +22,14 @@ if (!isset($_SESSION) || (session_id() == '')) {
     session_start();
 }
 
+// Get the protocol and URL location.
+$protocol = (isset($_SERVER['HTTPS']) && !empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] != 'off') ? 'https://' : 'http://';
+$location = $_SERVER['HTTP_HOST'] . $_SERVER['SCRIPT_NAME'];
+
 // If the variable "logout" is passed with value 1, logout.
 if (isset($_GET['logout']) && $_GET['logout'] == '1') {
     unset($_SESSION['AUTH_user_authenticated']);
-    header('Location: http://' . $_SERVER['HTTP_HOST'] . $_SERVER['SCRIPT_NAME']);
+    header('Location: ' . $protocol . $location);
     exit;
 }
 
@@ -54,7 +58,7 @@ if (isset($_POST['username']) && isset($_POST['password'])) {
             echo '<p>bad password file format [E2005]</p>';
             die();
         }
-        if ((isset($user[0]) && (trim($user[0]) == '') ) || (isset($user[1]) && (trim($user[1]) == ''))) {
+        if ((trim($user[0]) == '') || (trim($user[1]) == '')) {
             echo '<p>bad password file format [E2010]</p>';
             die();
         }
@@ -63,7 +67,7 @@ if (isset($_POST['username']) && isset($_POST['password'])) {
         if ($_POST['username'] == $username) {
             if (password_verify($_POST['password'], $password)) {
                 $_SESSION['AUTH_user_authenticated'] = $username;
-                header('Location: http://' . $_SERVER['HTTP_HOST'] . $_SERVER['SCRIPT_NAME']);
+                header('Location: ' . $protocol . $location);
                 exit;
             }
         }
@@ -72,6 +76,6 @@ if (isset($_POST['username']) && isset($_POST['password'])) {
 
 // If the user isn't authenticated, show login form and exit.
 if (!isset($_SESSION['AUTH_user_authenticated'])) {
-    echo '<form action="index.php" method="POST"><input type="text" name="username" placeholder="username"><input type="password" name="password" placeholder="password"><input type="submit" value="login"></form>';
+    echo '<form action="' .$protocol . $location . '" method="POST"><input type="text" name="username" placeholder="username"><input type="password" name="password" placeholder="password"><input type="submit" value="login"></form>';
     die();
 }
