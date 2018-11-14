@@ -58,3 +58,22 @@ Easy!
 Just pass the `logout=1` url parameter to your script. eg:
 
 `http://127.0.0.1/index.php?logout=1`
+
+---
+
+## Error messages
+
+ **Missing password file** [E2000]
+
+The script could not find the password file. Look at **steps 3 and 4** in the **script configuration** section above.
+
+ **Bad password file format** [E2005]
+
+Each line in the password file must have a username and a hashed password separated by one comma. Look at **step 4** in the **script configuration** section above for examples.
+
+**Bad user entry in password file** [E2010]
+
+Password file must follow these rules:
+
+1. Username or hash can't be empty.
+2. Avoid empty lines.
