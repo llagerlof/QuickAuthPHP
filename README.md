@@ -4,7 +4,7 @@ One script for web authentication. Non obstrusive, support multiple users and no
 
 ## Purpose
 
-Sometimes you have a small web application that you want to keep private, but don't have time to implement a proper database authentication system, nor `.htaccess` is suitable for your need. If this is true for you, QuickAuthPHP is a super fast solution.
+Sometimes you have a small web application that you want to keep private, but don't have time to implement a proper database authentication system, nor `.htaccess` is suitable for your needs. If this is true for you, QuickAuthPHP is a super fast solution.
 
 ## Script configuration
 
@@ -61,7 +61,7 @@ Just pass the `logout=1` url parameter to your script. eg:
 
 ---
 
-## Error messages
+### Explained error messages
 
  **Missing password file** [E2000]
 
