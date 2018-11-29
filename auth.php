@@ -1,6 +1,6 @@
 <?php
 /**
- * Quick Auth PHP 1.1.2
+ * Quick Auth PHP 1.1.3
  *
  * Quick Auth PHP is a script to quickly add web authentication for multiple users. No database required.
  *
@@ -34,7 +34,7 @@ if (isset($_GET['logout']) && $_GET['logout'] == '1') {
 }
 
 // If username and password was POSTed, teste it against the password file.
-if (isset($_POST['username']) && isset($_POST['password'])) {
+if (isset($_POST['username']) && isset($_POST['password']) && (strlen($_POST['username']) <= 255) && (strlen($_POST['password']) <= 255)) {
     // Find the password file in path defined in auth.conf.
     if (file_exists(dirname(__FILE__). '/auth.conf')) {
         $config = parse_ini_file(dirname(__FILE__) . '/auth.conf');
