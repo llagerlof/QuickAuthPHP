@@ -1,6 +1,6 @@
 <?php
 /**
- * Quick Auth PHP 1.1.3
+ * Quick Auth PHP 1.1.4
  *
  * Quick Auth PHP is a script to quickly add web authentication for multiple users. No database required.
  *
@@ -33,42 +33,43 @@ if (isset($_GET['logout']) && $_GET['logout'] == '1') {
     exit;
 }
 
-// If username and password was POSTed, teste it against the password file.
+// Validate username and password and test it against password file.
 if (isset($_POST['username']) && isset($_POST['password']) && (strlen($_POST['username']) <= 255) && (strlen($_POST['password']) <= 255)) {
-    // Find the password file in path defined in auth.conf.
-    if (file_exists(dirname(__FILE__). '/auth.conf')) {
-        $config = parse_ini_file(dirname(__FILE__) . '/auth.conf');
-        $passwordfile = isset($config['passwordfile']) ? $config['passwordfile'] : dirname(__FILE__) . '/auth.pass';
-    } else {
-        // If there isn't no configuration file, look for the password file auth.pass in the same directory of this lib.
-        $passwordfile = dirname(__FILE__). '/auth.pass';
-    }
-    // Password file don't exist. Alert user.
-    if (!file_exists($passwordfile)) {
-        echo '<p>missing password file [E2000]</p>';
-        die();
-    }
-
-    // Parse the password file, testing for the valid credentials.
-    $users = file($passwordfile, FILE_IGNORE_NEW_LINES);
-    foreach ($users as $line) {
-        $user = explode(',', $line);
-        // Check the consistency of the current line from password file.
-        if (count($user) != 2) {
-            echo '<p>bad password file format [E2005]</p>';
+    if ((ctype_print($_POST['username'])) && (ctype_print($_POST['password']))) {
+        // Find the password file in path defined in auth.conf.
+        if (file_exists(dirname(__FILE__). '/auth.conf')) {
+            $config = parse_ini_file(dirname(__FILE__) . '/auth.conf');
+            $passwordfile = isset($config['passwordfile']) ? $config['passwordfile'] : dirname(__FILE__) . '/auth.pass';
+        } else {
+            // If there isn't no configuration file, look for the password file auth.pass in the same directory of this lib.
+            $passwordfile = dirname(__FILE__). '/auth.pass';
+        }
+        // Password file don't exist. Alert user.
+        if (!file_exists($passwordfile)) {
+            echo '<p>missing password file [E2000]</p>';
             die();
         }
-        if ((trim($user[0]) == '') || (trim($user[1]) == '')) {
-            echo '<p>bad user entry in password file [E2010]</p>';
-            die();
-        }
-        $username = $user[0];
-        $password = $user[1];
-        if ($_POST['username'] == $username) {
-            if (password_verify($_POST['password'], $password)) {
-                $_SESSION['AUTH_user_authenticated'] = $username;
-                header('Location: ' . $protocol . $location);
-                exit;
+        // Parse the password file, testing for the valid credentials.
+        $users = file($passwordfile, FILE_IGNORE_NEW_LINES);
+        foreach ($users as $line) {
+            $user = explode(',', $line);
+            // Check the consistency of the current line from password file.
+            if (count($user) != 2) {
+                echo '<p>bad password file format [E2005]</p>';
+                die();
+            }
+            if ((trim($user[0]) == '') || (trim($user[1]) == '')) {
+                echo '<p>bad user entry in password file [E2010]</p>';
+                die();
+            }
+            $username = $user[0];
+            $password = $user[1];
+            if ($_POST['username'] == $username) {
+                if (password_verify($_POST['password'], $password)) {
+                    $_SESSION['AUTH_user_authenticated'] = $username;
+                    header('Location: ' . $protocol . $location);
+                    exit;
+                }
             }
         }
     }
