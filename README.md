@@ -4,7 +4,7 @@ One script for web authentication. Non obstrusive, support multiple users and no
 
 ## Purpose
 
-Sometimes you have a small web application that you want to keep private, but don't have time to implement a proper database authentication system, nor `.htaccess` is suitable for your needs. If this is true for you, QuickAuthPHP is a super fast solution.
+Sometimes you have a small web application that you want to keep private, but don't have time to implement a proper database authentication system, nor `.htaccess` is suitable for your needs. If this is true for you, QuickAuthPHP is a super fast and easy solution.
 
 ## Script configuration
 
@@ -51,7 +51,7 @@ require_once('/var/www/htdocs/auth.php');
 
 Now when you access your script using a browser (`index.php` in this example), you are presented with a small username/password form asking for your credentials.
 
-Easy!
+Look inside the `example` directory for a full working configuration.
 
 ## To logout
 
