@@ -1,6 +1,6 @@
 <?php
 /**
- * Quick Auth PHP 1.1.4
+ * Quick Auth PHP 1.1.5
  *
  * Quick Auth PHP is a script to quickly add web authentication for multiple users. No database required.
  *
@@ -23,8 +23,9 @@ if (!isset($_SESSION) || (session_id() == '')) {
 }
 
 // Get the protocol and URL location.
-$protocol = (isset($_SERVER['HTTPS']) && !empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] != 'off') ? 'https://' : 'http://';
-$location = $_SERVER['HTTP_HOST'] . $_SERVER['SCRIPT_NAME'];
+$protocol = ((isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] != 'off') || (isset($_SERVER['HTTP_X_FORWARDED_PROTO']) == 'https') || (isset($_SERVER['HTTP_X_SCHEME']) == 'https')) ? 'https://' : 'http://';
+$host = $_SERVER['HTTP_X_FORWARDED_HOST'] ?? $_SERVER['HTTP_HOST'];
+$location = $host . $_SERVER['SCRIPT_NAME'];
 
 // If the variable "logout" is passed with value 1, logout.
 if (isset($_GET['logout']) && $_GET['logout'] == '1') {
